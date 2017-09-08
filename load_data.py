@@ -175,7 +175,7 @@ def test_extract_start_ticker():
 def main(argv):
     print("")
     if len(argv) != 4:
-        print('Usage: python load_data {} {} {} {}'.format(PATH, TICK, BEGIN_TIME, END_TIME))
+        print('Usage: python load_data.py {} {} {} {}'.format(PATH, TICK, BEGIN_TIME, END_TIME))
         print("The number of arguments are wrong (should be 4). Please refer to usage prompt")
         sys.exit()
 
