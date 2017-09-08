@@ -27,8 +27,8 @@ def LoadData(path, ticker, begin_time, end_time):
     """
     Parameters
     ----------
-    path : full path of input file (string)
-    ticker : the ticker string. e.g., 'cu'
+    path : path of the data folder e.g. './data/marketdatacsv'
+    ticker : the ticker string, case insensitive. e.g., 'cu'
     begin_time : in the format of yyyymmddhhmmss or yyyymmdd(auto convert to 09:00:00)
     end_time: in the format of yyyymmddhhmmss or yyyymmdd(auto convert to 23:59:00)
     
@@ -37,7 +37,7 @@ def LoadData(path, ticker, begin_time, end_time):
     df : a pandas DataFrame object containing all the data in the time range
     The DataFrame object will also be cached in the store.h5
     To recover the cache, call
-    df = pd.HDFStore[contract_name], where contract_name is always in lower cases
+    df = pd.HDFStore[contract_name_beginDate_endDate], where contract_name is always in lower cases
 
     """
     begin_time = try_parsing_date(begin_time)
