@@ -2,8 +2,9 @@ from datetime import datetime, time
 import numpy as np
 import pandas as pd
 import re
-import sys
+import sys, getopt
 import os
+import scipy.io as sio
 
 #########################################################
 
@@ -16,6 +17,7 @@ TICK = 'cu'
 BEGIN_TIME = '20170103'
 END_TIME = '20170105'
 DATA_STORE = 'store.h5'
+OUTPUT_FOLDER = './output'
 
 #########################################################
 
@@ -23,7 +25,7 @@ DATA_STORE = 'store.h5'
 
 #########################################################
 
-def LoadData(path, ticker, begin_time, end_time):
+def LoadData(path, ticker, begin_time, end_time, matlab=False):
     """
     Parameters
     ----------
@@ -52,8 +54,16 @@ def LoadData(path, ticker, begin_time, end_time):
     contract, selected_files = select_most_active_contract(ticker, folders)
     print('Based on file size, the selected contract name is {}, selected files are {}'.format(contract, selected_files))
     df = pd.concat([load_file_data(f, begin_time, end_time) for f in selected_files])
+    
     filename = "{}_{}_{}".format(contract, date_to_string(begin_time), date_to_string(end_time))
-    save_data_as_hd5(filename, df)
+    output_path = OUTPUT_FOLDER
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+    if matlab:
+        save_data_as_mat(output_path, filename, df)
+    else:
+        save_data_as_hd5(output_path, filename, df)
+    
     return df, filename
 
 
@@ -72,9 +82,22 @@ def calculate_stats(df):
     df.fillna(method="ffill",inplace=True)
     return df
 
-def save_data_as_hd5(filename, df):
-    store = pd.HDFStore(DATA_STORE)
+def save_data_as_hd5(path, filename, df):
+    fullpath = os.path.join(path, DATA_STORE)
+    store = pd.HDFStore(fullpath)
     store[filename] = df
+    print("")
+    print("The Data has been loaded and stored in {} under the key ['{}']".format(fullpath, filename))
+    print("")
+    print("Please refer to recover_from_cache.py file to see how to read from the h5 file")
+
+def save_data_as_mat(path, filename, df):
+    a_dict = {col_name : df[col_name].values for col_name in df.columns.values}
+    a_dict[df.index.name] = df.index.values
+    output_file = os.path.join(path, '{}.mat'.format(filename))
+    sio.savemat(output_file, {filename:a_dict})
+    print("")
+    print("The Data has been loaded and stored in {} under the key ['{}']".format(output_file, filename))
 
 def load_file_data(path, begin_time=None, end_time=None):
     column_names = ['theDay','theTime','theMSecond','theBidPrice1','theBidVolume1','theAskPrice1','theAskVolume1','theLastPrice','theVolume',
@@ -174,19 +197,14 @@ def test_extract_start_ticker():
 
 def main(argv):
     print("")
-    if len(argv) != 4:
+    if len(argv) != 4 and not (len(argv) == 5 and argv[4] == '-m'):
+        print("Invalid commands")
         print('Usage: python load_data.py {} {} {} {}'.format(PATH, TICK, BEGIN_TIME, END_TIME))
-        print("The number of arguments are wrong (should be 4). Please refer to usage prompt")
+        print('Append -m to the end of above command if you want the data stored as .mat file')
         sys.exit()
 
     df, key = LoadData(*argv)
-
     print("")
-    print(df.info())
-
-    print("")
-    print("The Data has been loaded and stored in {} under the key ['{}']".format(DATA_STORE, key))
-    print("Please refer to recover_from_cache.py file to see how to read from the h5 file")
 
 if __name__ == "__main__":
     main(sys.argv[1:])

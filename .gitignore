@@ -37,3 +37,4 @@ config.rst
 /.pydevproject
 store.h5
 data/
+output/
