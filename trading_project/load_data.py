@@ -173,22 +173,6 @@ def get_folders_of_time_ranges(path, begin_time, end_time):
     target_folder = filter(lambda x: check_date_in_range(extract_end_digits(x), begin_time, end_time) , os.listdir(path))
     return map(lambda x: os.path.join(path, x), target_folder)
 
-############################################################
-
-#Test functions
-
-############################################################
-
-def test_extract_end_digits():
-    test_strings = ['20170103', 'abc20170103', '12abc13d20170103']
-    for s in test_strings:
-        assert(extract_end_digits(s) == '20170103')
-
-def test_extract_start_ticker():
-    test_strings = ['j1', 'j123dfsfs']
-    for s in test_strings:
-        assert(extract_start_ticker(s) == 'j')
-
 #########################################################
 
 # Command line support
