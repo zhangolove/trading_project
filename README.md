@@ -3,12 +3,13 @@
 
 ## Running Environment
 
-Dependencies can be found in trading-env.txt.
+Dependencies can be found in environment.yml.
 
 The easiest way to have the exactly same dependencies is to use [Anaconda](https://docs.continuum.io/anaconda/install/)
 
 ```
-conda env create --file trading-env.txt
+conda env create -f environment.yml
+source activate trading_research
 ```
 
 ## Run the script
