@@ -34,4 +34,5 @@ def load_exchange_hours_from_excel(file=INPUT_FILE):
 	#print(data.loc['cu',:])
 	return data
 
-load_exchange_hours_from_excel()
+if __name__ == "__main__":
+    load_exchange_hours_from_excel()
