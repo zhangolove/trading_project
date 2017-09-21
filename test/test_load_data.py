@@ -41,7 +41,8 @@ class TestLoadData(unittest.TestCase):
         contract, selected_files = select_most_active_contract(self.tick, folders)
         for sf in selected_files:
             raw = csv_2_df(sf)
-            filtered = load_file_data(sf, begin_time, end_time)
+            hours = get_exchange_hours(self.tick)
+            filtered = load_file_data(sf, hours, begin_time, end_time)
             ds1 = set([ tuple(line) for line in raw.values.tolist()])
             ds2 = set([ tuple(line) for line in filtered.values.tolist()])
             for t in ds1.difference(ds2):
@@ -49,7 +50,8 @@ class TestLoadData(unittest.TestCase):
                 time = try_parsing_date(date_string)
                 self.assertTrue(time >= begin_time)
                 self.assertTrue(time <= end_time)
-                self.assertTrue(time.hour < 9)
+                print(t[1:3])
+            
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,6 +1,6 @@
 import pandas as pd
 
-DATA_STORE = './output/store.h5'
+DATA_STORE = '../output/store.h5'
 
 def recover_from_cache():
 	store = pd.HDFStore(DATA_STORE)
