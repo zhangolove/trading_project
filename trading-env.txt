@@ -61,5 +61,6 @@ https://repo.continuum.io/pkgs/free/osx-64/traitlets-4.3.2-py36_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/wcwidth-0.1.7-py36_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/wheel-0.29.0-py36_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/widgetsnbextension-3.0.2-py36_0.tar.bz2
+https://repo.continuum.io/pkgs/free/osx-64/xlrd-1.1.0-py36_0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/xz-5.2.3-0.tar.bz2
 https://repo.continuum.io/pkgs/free/osx-64/zlib-1.2.11-0.tar.bz2
