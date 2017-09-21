@@ -6,7 +6,7 @@ import sys, getopt
 import os
 import scipy.io as sio
 
-from trading_project.load_exchange_hours import load_exchange_hours_from_excel
+from load_exchange_hours import load_exchange_hours_from_excel
 
 #########################################################
 
@@ -17,7 +17,7 @@ from trading_project.load_exchange_hours import load_exchange_hours_from_excel
 HOURS_FILE = '../data/exchange_hours.xlsx'
 CACHE_KEY_FOR_HOURS_DATA = 'exchange_hours'
 DATA_STORE = 'store.h5'
-OUTPUT_FOLDER = './output'
+OUTPUT_FOLDER = '../output'
 
 #########################################################
 
