@@ -43,7 +43,7 @@ def LoadData(path, ticker, begin_time, end_time, matlab=False):
 
     """
     
-    begin_time, end_time = parse_user_provided_time(begin_time, end_time)
+    begin_time, end_time, o_endtime = parse_user_provided_time(begin_time, end_time)
     folders = get_folders_of_time_ranges(path, begin_time, end_time)
     contract, selected_files = select_most_active_contract(ticker, folders)
     print('Based on file size, the selected contract name is {}, selected files are {}'.format(contract, selected_files))
@@ -56,7 +56,7 @@ def LoadData(path, ticker, begin_time, end_time, matlab=False):
 
     df = pd.concat([load_file_data(f, hours, begin_time, end_time) for f in selected_files])
     
-    filename = "{}_{}_{}".format(contract, date_to_string(begin_time), date_to_string(end_time))
+    filename = "{}_{}_{}".format(contract, date_to_string(begin_time), date_to_string(o_endtime))
     
     if matlab:
         save_data_as_mat(output_path, filename, df)
@@ -87,12 +87,13 @@ def get_exchange_hours(tick, path=None, use_cache=False):
 def parse_user_provided_time(begin_time, end_time):
     begin_time = try_parsing_date(begin_time)
     end_time = try_parsing_date(end_time)
+    o_end_time = end_time
     # if the user do not provide hours for end_time, make it the 00:00 of the next day
     try:
         datetime.strptime(end_time, '%Y%m%d%H%M%S')
     except:
         end_time += timedelta(days=1)
-    return begin_time, end_time
+    return begin_time, end_time, o_end_time
 
 def date_to_string(date):
     return date.strftime('%Y%m%d')
