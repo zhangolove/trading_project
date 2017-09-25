@@ -34,12 +34,34 @@ class BaseTradingStrategy:
 
 
 class VixStretchStrategy(BaseTradingStrategy):
+    '''
+    1. The underlying security is above its M-period moving average.
+    2. Buy signal: if the realized volatility of underlying over past N-period 
+    (or VIX) is stretched x-% or more above its V-period moving average for K or 
+    more days, then buy on the close of the current period.
+    3. Exit signal: when the underlying closes above a S-period RSI of Y or more.
+    '''
+    def rolling_data(self, num_period):
+        window = num_period * self.params['P']
+        return self.data.rolling('{}s'.format(window))
 
     def get_trade_action(self) -> List[TradeAction]:
+        ma_m_period = self.rolling_data(self.params['M']).mean()
+        print(ma_m_period.head())
+
         return [TradeAction(0, 1., datetime.now())]
 
 
 
 if __name__ == "__main__":
+    params = {'P': 5 * 60,
+              'M': 20,
+              'N': 5,
+              'x': 5,
+              'V': 10,
+              'K': 1,
+              'S': 2,
+              'Y': 65,
+              'price_column': 'theVWPrice'}
     strategy = VixStretchStrategy({}, pd.DataFrame())
     print(strategy.get_trade_action()[0])
