@@ -16,7 +16,11 @@ class StrategyEvaluator:
         return 0.8
 
 if __name__ == "__main__":
-    df = pd.DataFrame()
-    strategy = VixStretchStrategy({}, df)
+    store = pd.HDFStore('../output/store.h5')
+    available_files = store.keys()
+    df = store['cu1703_20170103_20170106']
+    store.close()
+
+    strategy = VixStretchStrategy(df)
     evaluator = StrategyEvaluator(strategy.get_trade_action(), df)
     print(evaluator.get_cumulative_return())

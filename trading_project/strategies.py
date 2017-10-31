@@ -24,8 +24,16 @@ class TradeAction:
 class BaseTradingStrategy:
 
     def __init__(self,
-                 params: Dict,
-                 data: pd.DataFrame):
+                 data: pd.DataFrame,
+                 params={'P': 5 * 60,
+                          'M': 20,
+                          'N': 5,
+                          'x': 5,
+                          'V': 10,
+                          'K': 1,
+                          'S': 2,
+                          'Y': 65,
+                          'price_column': 'theVWPrice'}):
         self.params = params
         self.data = data
 
@@ -53,15 +61,15 @@ class VixStretchStrategy(BaseTradingStrategy):
 
 
 
-if __name__ == "__main__":
-    params = {'P': 5 * 60,
-              'M': 20,
-              'N': 5,
-              'x': 5,
-              'V': 10,
-              'K': 1,
-              'S': 2,
-              'Y': 65,
-              'price_column': 'theVWPrice'}
-    strategy = VixStretchStrategy({}, pd.DataFrame())
-    print(strategy.get_trade_action()[0])
+
+
+
+
+
+
+
+
+
+
+
+
