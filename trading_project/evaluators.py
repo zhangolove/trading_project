@@ -17,7 +17,6 @@ class StrategyEvaluator:
 
 if __name__ == "__main__":
     store = pd.HDFStore('../output/store.h5')
-    available_files = store.keys()
     df = store['cu1703_20170103_20170106']
     store.close()
 

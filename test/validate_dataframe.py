@@ -15,4 +15,10 @@ store.close()
 
 # https://stackoverflow.com/questions/15771472/pandas-rolling-mean-by-time-interval
 print("df index is unique {}".format(df.index.is_unique))
-print(df.rolling(window='6000s').mean())
+# print(df['theBidPrice1'].rolling('10s'))
+print("================================\n")
+print(df.resample('30s').ffill())
+
+#sliding window https://stackoverflow.com/questions/14631139/pandas-rolling-computations-on-sliding-windows-unevenly-spaced
+
+
